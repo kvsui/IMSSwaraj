@@ -15,6 +15,10 @@ from flask_login import UserMixin
 from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField, BooleanField, DecimalField, IntegerField
 from wtforms.validators import DataRequired, Length, Email, EqualTo, ValidationError
+import random
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = '5791628bb0b13ce0c676dfde280ba245'
@@ -328,6 +332,7 @@ def forgotpass():
     if request.method=='POST':
         global otp
         otp = generateOTP()
+        print(otp)
         mail_content = f'{otp}'
         sender_address = 'karanvirsingh.be18mech@pec.edu.in'
         sender_pass = 'eolpihltvrvuglba'
