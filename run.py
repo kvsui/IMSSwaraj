@@ -302,7 +302,7 @@ def BOM():
     return render_template('BOM.html')
 @app.route("/Report")
 def report():
-    return render_template('50113a02-9ea4-11eb-8b25-0cc47a792c0a_id_50113a02-9ea4-11eb-8b25-0cc47a792c0a.html')
+    return render_template('report.html')
 
 
 @app.route("/Demand",methods=['GET','POST'])
