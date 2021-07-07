@@ -119,6 +119,17 @@ class LoginForm(FlaskForm):
     remember = BooleanField('Remember Me')
     submit = SubmitField('Login')
 
+class changepasswordform(FlaskForm):
+    password = PasswordField('Password', validators=[DataRequired()])
+    confirm_password = PasswordField('Confirm Password', validators=[DataRequired(), EqualTo('password')])
+    submit = SubmitField('Change Password')
+
+class forgotpassword(FlaskForm):
+    email = StringField('Email',
+                        validators=[DataRequired(), Email()])
+    otp = IntegerField('OTP')
+    Submit = SubmitField("Send Confirmation")
+
 class inventorypage(FlaskForm):
      Name = StringField('Part Number', validators=[DataRequired()])
      Class = StringField('Class',validators=[DataRequired()])
@@ -276,6 +287,14 @@ def logout():
     logout_user()
     return redirect(url_for('home'))
 
+
+@app.route("/account", methods=['GET','POST'])
+@login_required
+def account():
+    if request.form.get('pwd',None) == 'Change Password': 
+        return redirect(url_for('changepassword'))
+    return render_template('account.html', title='Account')
+
 @app.route("/changepassword", methods=['GET',"POST"])
 def changepassword():
     form = changepasswordform()
@@ -287,14 +306,6 @@ def changepassword():
         flash("Password Changed", 'success')
         return redirect(url_for('account'))
     return render_template("changepass.html", form = form)
-
-
-@app.route("/account", methods=['GET','POST'])
-@login_required
-def account():
-    if request.form.get('pwd',None) == 'Change Password': 
-        return redirect(url_for('changepassword'))
-    return render_template('account.html', title='Account')
 
 
 @app.route("/BOM")
