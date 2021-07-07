@@ -112,7 +112,6 @@ class Vendor(db.Model):
         return f"Inventorydata('{self.Vendor}', '{self.QualityRating}', '{self.DeliveryRating }', '{self.OverallRating}')"
 
 
-
 class LoginForm(FlaskForm):
     email = StringField('Email',validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
@@ -307,6 +306,52 @@ def changepassword():
         return redirect(url_for('account'))
     return render_template("changepass.html", form = form)
 
+def generateOTP() :
+ 
+    # Declare a digits variable 
+    # which stores all digits
+    digits = "0123456789"
+    OTP = ""
+ 
+   # length of password can be chaged
+   # by changing value in range
+    for i in range(4) :
+        OTP += digits[math.floor(random.random() * 10)]
+ 
+    return OTP
+
+otp = 0 #global variable for otp
+
+@app.route("/forgotpassword", methods=['GET','POST'])
+def forgotpass():
+    form = forgotpassword()
+    if request.method=='POST':
+        global otp
+        otp = generateOTP()
+        mail_content = f'{otp}'
+        sender_address = 'karanvirsingh.be18mech@pec.edu.in'
+        sender_pass = 'eolpihltvrvuglba'
+        receiver_address = form.email.data
+        message = MIMEMultipart()
+        message['From'] = sender_address
+        message['To'] = receiver_address
+        message['Subject'] = 'Recover Your Account' 
+        message.attach(MIMEText(mail_content, 'plain'))
+        session = smtplib.SMTP('smtp.gmail.com', 587)
+        session.starttls()
+        session.login(sender_address, sender_pass)
+        text = message.as_string()
+        session.sendmail(sender_address, receiver_address, text)
+        session.quit()
+    return render_template("forgotpassword.html", form = form)
+
+@app.route("/verify", methods=['GET','POST'])
+def verify():
+    tempotp = request.form.get('otp')
+    if tempotp==otp:
+        flash("remember your password", 'danger')
+
+    return redirect(url_for('register'))
 
 @app.route("/BOM")
 def BOM():
