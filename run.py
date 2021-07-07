@@ -411,28 +411,33 @@ def DemandFoq():
 @app.route("/Database",methods = ['GET','POST'])
 def datainv():
     form=datainvf()
-    rows=[]
-    if request.method=='POST':
-        Part = form.ID.data
-        Class = form.Class.data
-        if Part=="":
-            try:
-                rows=Inventorydata.query.filter_by(Class=Class).all()
-            except:
-                flash("Connection Error",'danger')
-        else:
-            if request.form.get('Upd',None) == 'Update':
-                flash("Update the details", 'danger')
-                return redirect(url_for('updateform', part = Part))
-            if request.form.get('Del',None) == 'Delete':
-                Inventorydata.query.filter_by(Name = Part).delete()
-                db.session.commit()
-                flash(f'Record Deleted', 'danger')
+    if current_user.is_authenticated:
+        rows=[]
+        if request.method=='POST':
+            Part = form.ID.data
+            Class = form.Class.data
+            if Part=="":
+                try:
+                    rows=Inventorydata.query.filter_by(Class=Class).all()
+                except:
+                    flash("Connection Error",'danger')
             else:
-                rows = Inventorydata.query.filter_by(Name=Part).all()
-        if not rows:
-            flash("NO RECORD FOUND",'danger')
-    return render_template("view.html",form=form,rows = rows)
+                if request.form.get('Upd',None) == 'Update':
+                    flash("Update the details", 'danger')
+                    return redirect(url_for('updateform', part = Part))
+                if request.form.get('Del',None) == 'Delete':
+                    Inventorydata.query.filter_by(Name = Part).delete()
+                    db.session.commit()
+                    flash(f'Record Deleted', 'danger')
+                else:
+                    rows = Inventorydata.query.filter_by(Name=Part).all()
+            if not rows:
+                flash("NO RECORD FOUND",'danger')
+        return render_template("view.html",form=form,rows = rows)
+    else:
+        form1 = RegistrationForm()
+        flash('Unauthorized access', 'danger')
+        return render_template('register.html',form=form1)
 
 @app.route("/updateform/<part>", methods = ['GET','POST'])
 def updateform(part):
