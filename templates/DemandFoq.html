@@ -11,7 +11,7 @@
                         {{ form.Class(class="form-control form-control-lg")}}
                     </div>
                      <div class="form-group">
-                        {{ form.Demand.label(class="form-control-label") }}
+                        {{ form.Demand.label(class="form-control-label") }} Per Day
 
                     
                         {{ form.Demand(class="form-control form-control-lg")}}
@@ -33,8 +33,7 @@
                 {{ form.Submit(class="btn btn-outline-info") }}
             </div>
             <div class="form-group">
-                
-                {{ lot }}
+                The Reorder Point should be: &nbsp;{{ lot }} units
             </div>
     </div>
 

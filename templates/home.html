@@ -68,8 +68,8 @@
             <div class="navbar-nav mr-auto">
               <a class="nav-item nav-link" href="{{ url_for('home') }}">Home</a>
               <a class="nav-item nav-link" href="{{ url_for('about') }}">About</a>
-               <a class="nav-item nav-link" href="{{ url_for('inventory') }}">Inventory Model</a>
-               <a class="nav-item nav-link" href="{{url_for('demand' ) }}">Lot-Size Forecast</a>
+               <a class="nav-item nav-link" href="{{ url_for('inventory') }}">Add items</a>
+               <a class="nav-item nav-link" href="{{url_for('demand' ) }}">Static Lot-Size Forecast</a>
                <a class="nav-item nav-link" href="{{url_for('stocastic' ) }}">Variable Demand</a>
             </div>
             <!-- Navbar Right Side -->
@@ -129,10 +129,15 @@
 						<div class="col-sm-6">
 							<div class="single-about-txt">
 								<h3>
-								THE MAIN OBJECTIVE OF THIS PROJECT WAS TO ANALYSE AND STUDY THE BILL OF MATERIAL OF PLANT-1 OF SWARAJ DIVISION AND OPTIMIZE THE INVENTORY MANAGEMENT TECHNIQUES BY INCORPORATING SIMPLE MODELS AND CREATING A SOFTWARE FOR MANAGING AND IMPROVING FURTHER AMOUNT OF DATA IN A ROBUST AND SIMPLE USER INTERFACE.
+									<ul>
+										<li>1. To analyse the inventory management methods using ABC, VED analysis etc.</li>
+								    <li>2. To determine the lot size of selected raw material in a static demand scenario using economic order quantity and fixed order quantity.</li>
+                  	<li>3. To create a mathematical model for determining optimized lot size of inventory items having a stochastic demand.</li>
+                  	<li>4. To evaluate the inventory management norms in Plant-1 of Swaraj Division.</li>
+                    <li>5. To create a web-based application implementing the necessary concepts of inventory management with a simple user interface.</li>
 								</h3>
 								<p>
-									The approach which I implemented to achieve this goal is by studying and analysing research papers of many production environments and developing an algorithm of my own using the techniques of database management and machine learning to optimize and catalyse the process of designing a standard protocol for a particular class of inventory.
+									The approach which I implemented to achieve this goal is by studying and analysing research papers of many production environments and developing an algorithm of my own using the techniques of engineering analysis and design to optimize and catalyse the process of designing a standard protocol for a particular class of inventory.
 								</p>
 								<div class="row">
 									<div class="col-sm-4">
@@ -179,7 +184,7 @@
 		<!--education start -->
 		<section id="education" class="education">
 			<div class="section-heading text-center">
-				<h2>DATA FLOW DIAGRAM</h2>
+				<h2>Progress DIAGRAM</h2>
 			</div>
 			<div class="container">
 				<div class="education-horizontal-timeline">
@@ -251,16 +256,16 @@
 								<div class="timeline">
 									<div class="timeline-content">
 										<h4 class="title">
-											The concept of Linear Optimization
+											 Production Schedule Optimisation
 										</h4>
-										<h5>Using the techniques of machine appropiate model is implemented to forecating the lot-size for a particular class of inventory.</h5>
+										<h5>Using the Newton Raphson Algorithm, the total cost that goes into the production of an item is calculated and the function is minimized with respect to the time taken in production.</h5>
 										<p class="description">
 											After studying various inventory lot sizing techniques, we categorize the methods into two parts:
 											<ul>
 												<li>
 												Static Demand.</li>
 												<li>
-													Dynamic Demand.
+												Dynamic Demand.
 												</li>
 											</ul>
 											<br>
@@ -293,20 +298,17 @@
 											<div class="col-md-5">
 												<div class="experience-time text-right">
 													<h2>Step 1</h2>
-													<h3>Warehouse</h3>
-												</div><!--/.experience-time-->
+													<h3>Inventory Counting</h3>
+												</div>
 											</div><!--/.col-->
 											<div class="col-md-offset-1 col-md-5">
 												<div class="timeline">
 													<div class="timeline-content">
 														<h4 class="title">
 															<span><i class="fa fa-circle" aria-hidden="true"></i></span>
-															Counting
+															Method:
 														</h4>
-														<h5>heading</h5>
-														<p class="description">
-															process
-														</p>
+														<h5>As you apply barcodes or QR codes to items, you’ll scan them into the inventory management software. And it starts counting your inventory automatically.</h5>
 													</div><!--/.timeline-content-->
 												</div><!--/.timeline-->
 											</div><!--/.col-->
@@ -317,36 +319,28 @@
 								<li>
 									<div class="single-timeline-box fix">
 										<div class="row">
-											<div class="col-md-offset-1 col-md-5 experience-time-responsive">
-												<div class="experience-time">
-													<h2>
-														<span><i class="fa fa-circle" aria-hidden="true"></i></span>
-														step 2
-													</h2>
-													<h3>process desc</h3>
-												</div><!--/.experience-time-->
-											</div><!--/.col-->
 											<div class="col-md-5">
+												<div class="experience-time text-right">
+													<h2>Step 2</h2>
+													<h3>Inventory Locating</h3>
+												</div>
+											</div><!--/.col-->
+											<div class="col-md-offset-1 col-md-5">
 												<div class="timeline">
-													<div class="timeline-content text-right">
+													<div class="timeline-content">
 														<h4 class="title">
-															
+															<span><i class="fa fa-circle" aria-hidden="true"></i></span>
+															Methods:
 														</h4>
-														<h5>heading</h5>
-														<p class="description">
-															desc 
-														</p>
+														<br>
+														<ul>
+															<li>Memory Based System</li>
+															<li>Fixed location system</li>
+															<li>Zoning System</li>
+															<li>Random Location System</li>
+														</ul>
 													</div><!--/.timeline-content-->
 												</div><!--/.timeline-->
-											</div><!--/.col-->
-											<div class="col-md-offset-1 col-md-5 experience-time-main">
-												<div class="experience-time">
-													<h2>
-														<span><i class="fa fa-circle" aria-hidden="true"></i></span>
-														heading 
-													</h2>
-													<h3>desc1</h3>
-												</div><!--/.experience-time-->
 											</div><!--/.col-->
 										</div>
 									</div><!--/.single-timeline-box-->
@@ -358,7 +352,7 @@
 											<div class="col-md-5">
 												<div class="experience-time text-right">
 													<h2>Step 3</h2>
-													<h3>Description</h3>
+													<h3>Inventory Valuation</h3>
 												</div><!--/.experience-time-->
 											</div><!--/.col-->
 											<div class="col-md-offset-1 col-md-5">
@@ -366,52 +360,17 @@
 													<div class="timeline-content">
 														<h4 class="title">
 															<span><i class="fa fa-circle" aria-hidden="true"></i></span>
-															heading 
+															Methods:
 														</h4>
-														<h5>sub</h5>
-														<p class="description">
-															description 
-														</p>
+														<br>
+														<ul>
+															<li>Specific Indication</li>
+															<li>First in, First out(FIFO)</li>
+															<li>Last in, First out(LIFO)</li>
+															<li>Weighted Average Cost</li>
+														</ul>
 													</div><!--/.timeline-content-->
 												</div><!--/.timeline-->
-											</div><!--/.col-->
-										</div>
-									</div><!--/.single-timeline-box-->
-								</li>
-
-								<li>
-									<div class="single-timeline-box fix">
-										<div class="row">
-											<div class="col-md-offset-1 col-md-5 experience-time-responsive">
-												<div class="experience-time">
-													<h2>
-														<span><i class="fa fa-circle" aria-hidden="true"></i></span>
-														Step 4
-													</h2>
-													<h3>Process</h3>
-												</div><!--/.experience-time-->
-											</div><!--/.col-->
-											<div class="col-md-5">
-												<div class="timeline">
-													<div class="timeline-content text-right">
-														<h4 class="title">
-															Step 4
-														</h4>
-														<h5>Desc</h5>
-														<p class="description">
-															Process
-														</p>
-													</div><!--/.timeline-content-->
-												</div><!--/.timeline-->
-											</div><!--/.col-->
-											<div class="col-md-offset-1 col-md-5 experience-time-main">
-												<div class="experience-time">
-													<h2>
-														<span><i class="fa fa-circle" aria-hidden="true"></i></span>
-														Desc
-													</h2>
-													<h3>Process</h3>
-												</div><!--/.experience-time-->
 											</div><!--/.col-->
 										</div>
 									</div><!--/.single-timeline-box-->
@@ -422,8 +381,8 @@
 										<div class="row">
 											<div class="col-md-5">
 												<div class="experience-time text-right">
-													<h2>Step 5 </h2>
-													<h3>Heading</h3>
+													<h2>Step 4</h2>
+													<h3>Inventory Classification</h3>
 												</div><!--/.experience-time-->
 											</div><!--/.col-->
 											<div class="col-md-offset-1 col-md-5">
@@ -431,19 +390,21 @@
 													<div class="timeline-content">
 														<h4 class="title">
 															<span><i class="fa fa-circle" aria-hidden="true"></i></span>
-															Process
+															Methods:
 														</h4>
-														<h5>1</h5>
-														<p class="description">
-															2
-														</p>
+														<br>
+															<ul>
+															<li>ABC Analysis</li>
+															<li>VED Analysis</li>
+															<li>SDE Analysis</li>
+															<li>FSN Analysis</li>
+														</ul>
 													</div><!--/.timeline-content-->
 												</div><!--/.timeline-->
 											</div><!--/.col-->
 										</div>
 									</div><!--/.single-timeline-box-->
 								</li>
-
 							</ul>
 						</div><!--.main-timeline-->
 					</div><!--.experience-content-->

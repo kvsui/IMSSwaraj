@@ -1,0 +1,122 @@
+{% extends "layout.html" %}
+{% block content %}
+    <div class="content-section">
+        <form method="POST" action="">
+            <fieldset class="form-group">
+               <h3>Quality Details</h3>
+                     <div class="form-group">
+                        {{ form.vendor.label(class="form-control-label") }}
+
+                    
+                        {{ form.vendor(class="form-control form-control-lg")}}
+                    </div>
+                    <div class="form-group">
+                        {{ form.partnum.label(class="form-control-label") }}
+
+                    
+                        {{ form.partnum(class="form-control form-control-lg")}}
+                    </div>
+                     <div class="form-group">
+                        {{ form.numspecified.label(class="form-control-label") }}
+
+                    
+                        {{ form.numspecified(class="form-control form-control-lg")}}
+                    </div>
+                     <div class="form-group">
+                        {{ form.numreceived.label(class="form-control-label") }}
+
+                    
+                        {{ form.numreceived(class="form-control form-control-lg")}}
+                    </div>
+                     <div class="form-group">
+                        {{ form.acceptedlot.label(class="form-control-label") }}
+
+                    
+                        {{ form.acceptedlot(class="form-control form-control-lg")}}
+                    </div>
+                     <div class="form-group">
+                        {{ form.underdeviation.label(class="form-control-label") }}
+
+                    
+                        {{ form.underdeviation(class="form-control form-control-lg")}}
+                    </div>
+                     <div class="form-group">
+                        {{ form.inspected.label(class="form-control-label") }}
+
+                    
+                        {{ form.inspected(class="form-control form-control-lg")}}
+                    </div>
+                     <div class="form-group">
+                        {{ form.rejected.label(class="form-control-label") }}
+
+                    
+                        {{ form.rejected(class="form-control form-control-lg")}}
+                    </div>
+                     <div class="form-group">
+                        {{ form.lineprob.label(class="form-control-label") }} "Maximum value 20 points"
+
+                    
+                        {{ form.lineprob(class="form-control form-control-lg")}}
+                    </div>
+                     <div class="form-group">
+                        {{ form.customerlineprob.label(class="form-control-label") }} "Maximum value 20 points"
+
+                    
+                        {{ form.customerlineprob(class="form-control form-control-lg")}}
+                    </div>
+                     <div class="form-group">
+                        {{ form.warrantyprob.label(class="form-control-label") }} "Maximum value 5 points"
+
+                    
+                        {{ form.warrantyprob(class="form-control form-control-lg")}}
+                    </div>
+                     <div class="form-group">
+                        {{ form.response.label(class="form-control-label") }} "Maximum value 5 points"
+
+                    
+                        {{ form.response(class="form-control form-control-lg")}}
+                    </div>
+             </fieldset> 
+             <h3>Delivery</h3>
+             <br> 
+            <fieldset class="form-group">
+                     <div class="form-group">
+                        {{ form.ddspecified.label(class="form-control-label") }}
+
+                    
+                        {{ form.ddspecified(class="form-control form-control-lg")}}
+                    </div>
+                    <div class="form-group">
+                        {{ form.deliveredon.label(class="form-control-label") }}
+
+                    
+                        {{ form.deliveredon(class="form-control form-control-lg")}}
+                    </div>
+                     <div class="form-group">
+                        {{ form.Freight.label(class="form-control-label") }}
+
+                    
+                        {{ form.Freight(class="form-control form-control-lg")}}
+                    </div>
+            </fieldset> 
+            <h3>Service</h3>
+            <br>
+            <fieldset class="form-group">
+                     <div class="form-group">
+                        {{ form.courtesy.label(class="form-control-label") }} "Maximum value 50 points"
+
+                    
+                        {{ form.courtesy(class="form-control form-control-lg")}}
+                    </div>
+                    <div class="form-group">
+                        {{ form.responsiveness.label(class="form-control-label") }} "Maximum value 50 points"
+
+                    
+                        {{ form.responsiveness(class="form-control form-control-lg")}}
+                    </div>
+            </fieldset>            
+            <div class="form-group">
+                {{ form.Submit(class="btn btn-outline-info") }}
+            </div>
+    </div>
+{% endblock content %}

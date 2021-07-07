@@ -83,6 +83,35 @@ class RegistrationForm(FlaskForm):
         if user:
             raise ValidationError('That email is taken. Please choose a different one.')
 
+class Vendor(db.Model):
+    ID = db.Column(db.Integer, primary_key=True)
+    Vendor = db.Column(db.String(100), nullable=False)
+    NumberSpecified = db.Column(db.Integer, nullable=False)
+    NumberReceived = db.Column(db.Float, nullable=False)
+    AcceptedLot = db.Column(db.Integer, nullable=False)
+    UnderDeviation = db.Column(db.Integer, nullable=False)
+    Inspected = db.Column(db.Integer, nullable=False)
+    Rejected = db.Column(db.Integer, nullable=False)
+    LineProblem = db.Column(db.Integer, nullable=False)
+    CustomerLineProblem = db.Column(db.Integer, nullable=False)
+    WarrantyProblem = db.Column(db.Integer, nullable=False)
+    Response = db.Column(db.Integer, nullable=False)
+    DeliveryDateSpecified = db.Column(db.String(10), nullable=False)
+    Deliveredon = db.Column(db.String(10), nullable=False)
+    PremiumFreight = db.Column(db.Integer, nullable=False)
+    Courtesy = db.Column(db.Integer, nullable=False)
+    Responsiveness = db.Column(db.Integer, nullable=False)
+    QualityRating = db.Column(db.Integer)
+    DeliveryRating = db.Column(db.Integer)
+    ServiceRating = db.Column(db.Integer)
+    OverallRating = db.Column(db.Integer)
+    PartNumber = db.Column(db.String,nullable=False)
+
+
+    def __repr__(self):
+        return f"Inventorydata('{self.Vendor}', '{self.QualityRating}', '{self.DeliveryRating }', '{self.OverallRating}')"
+
+
 
 class LoginForm(FlaskForm):
     email = StringField('Email',validators=[DataRequired(), Email()])
@@ -139,6 +168,27 @@ class expcase(FlaskForm):
     alpha = DecimalField('Alpha', validators=[DataRequired()])
     lambd = DecimalField('Value of Lambda', validators=[DataRequired()])
     Submit = SubmitField('Calculate')
+
+class vendor(FlaskForm):
+    vendor = StringField('Vendor Name',validators=[DataRequired()])
+    partnum = StringField("Part Number", validators=[DataRequired()])
+    numspecified = IntegerField("Number Specified at Order", validators=[DataRequired()])
+    numreceived= IntegerField("Number Received at order", validators=[DataRequired()])
+    acceptedlot = IntegerField("Accepted Lot", validators=[DataRequired()])
+    underdeviation = IntegerField("Under Deviation Lot", validators=[DataRequired()])
+    inspected = IntegerField("Inspected lot", validators=[DataRequired()])
+    rejected= IntegerField("Rejected Lot", validators=[DataRequired()])
+    lineprob = IntegerField("Line Problem", validators=[DataRequired()])
+    customerlineprob = IntegerField("Customer Line Problem", validators=[DataRequired()])
+    warrantyprob = IntegerField("Warranty Problem", validators=[DataRequired()])
+    response = IntegerField("Respose", validators=[DataRequired()])
+    ddspecified= StringField('Delivery Date Specified',validators=[DataRequired()])    
+    deliveredon = StringField('Delivery On',validators=[DataRequired()])  
+    Freight = IntegerField("Premium Freight Charges", validators=[DataRequired()])
+    courtesy = IntegerField("Courtesy", validators=[DataRequired()])
+    responsiveness = IntegerField("Responsiveness", validators=[DataRequired()])
+    Submit = SubmitField('Submit')
+
 
 @app.route("/")
 @app.route("/home", methods=['GET','POST'])
@@ -221,17 +271,31 @@ def inventory():
     return render_template('inventory.html',form = form)
         
 
-
 @app.route("/logout")
 def logout():
     logout_user()
     return redirect(url_for('home'))
 
+@app.route("/changepassword", methods=['GET',"POST"])
+def changepassword():
+    form = changepasswordform()
+    if form.validate_on_submit():
+        hashed_password = bcrypt.generate_password_hash(form.password.data).decode('utf-8')
+        record = User.query.filter_by(username=current_user.username).first()
+        record.password=hashed_password
+        db.session.commit()
+        flash("Password Changed", 'success')
+        return redirect(url_for('account'))
+    return render_template("changepass.html", form = form)
 
-@app.route("/account")
+
+@app.route("/account", methods=['GET','POST'])
 @login_required
 def account():
+    if request.form.get('pwd',None) == 'Change Password': 
+        return redirect(url_for('changepassword'))
     return render_template('account.html', title='Account')
+
 
 @app.route("/BOM")
 def BOM():
@@ -239,7 +303,6 @@ def BOM():
 @app.route("/Report")
 def report():
     return render_template('50113a02-9ea4-11eb-8b25-0cc47a792c0a_id_50113a02-9ea4-11eb-8b25-0cc47a792c0a.html')
-
 
 
 @app.route("/Demand",methods=['GET','POST'])
@@ -434,6 +497,36 @@ def expd(setcost, holdcost, A, B, C):
             t2 = "No optimised solution"
         return render_template("expcase.html", form=form, t2=t2, K=K, t1 = li[n-1])
     return render_template("expcase.html", form = form)
+
+@app.route("/VendorRating", methods = ["GET","POST"])
+def vendorrating():
+    form = vendor()
+    if request.method=='POST':
+        d = datetime.strptime(str(form.deliveredon.data), "%d/%m/%y") - datetime.strptime(str(form.ddspecified.data), "%d/%m/%y")
+        delay = d.days
+        slr = (int(form.acceptedlot.data) + 0.75*int(form.underdeviation.data) + 0.50*int(form.inspected.data)+ 0)/int(form.numreceived.data)
+        Quality_Rating = (50*slr + int(form.lineprob.data)+ int(form.customerlineprob.data)+ int(form.warrantyprob.data)+ int(form.response.data))
+        delaycheck = 1 if delay<=0 else 0
+        freightcheck = 1 if int(form.Freight.data)<0 else 0
+        Delivery_Rating = delaycheck*60 + freightcheck*10 + (int(form.numreceived.data)/int(form.numspecified.data))*30
+        Service_Rating = int(form.courtesy.data) + int(form.responsiveness.data)
+        Overall_Rating = (60 * Quality_Rating + 35*Delivery_Rating + 5*Service_Rating)/100
+        vendordetails = Vendor(Vendor = form.vendor.data, NumberSpecified = form.numspecified.data, NumberReceived = form.numreceived.data, AcceptedLot = form.acceptedlot.data, UnderDeviation = form.underdeviation.data, Inspected = form.inspected.data, Rejected = form.rejected.data, LineProblem = form.lineprob.data, CustomerLineProblem = form.customerlineprob.data, WarrantyProblem = form.warrantyprob.data, Response = form.response.data, DeliveryDateSpecified = form.ddspecified.data, Deliveredon = form.deliveredon.data, PremiumFreight = form.Freight.data, Courtesy = form.courtesy.data, Responsiveness=form.responsiveness.data, QualityRating = Quality_Rating, ServiceRating = Service_Rating, OverallRating = Overall_Rating, PartNumber = form.partnum.data, DeliveryRating=Delivery_Rating)
+        db.session.add(vendordetails)
+        db.session.commit()
+        flash("Vendor Rating Recorded", 'success')
+        return redirect(url_for('grade', vendor = form.vendor.data))
+    return render_template("vendor.html", form = form)
+
+@app.route("/VendorGrade/<vendor>", methods = ['GET','POST'])
+def grade(vendor):
+    records = Vendor.query.filter_by(Vendor=vendor).all()
+    if request.method == 'POST':
+        records=[]
+        vendorname = request.form.get("vendorname")
+        records = Vendor.query.filter_by(Vendor=vendorname).all()
+        return render_template('grade.html', records = records)
+    return render_template('grade.html', records = records)
 
 
 if __name__ == '__main__':

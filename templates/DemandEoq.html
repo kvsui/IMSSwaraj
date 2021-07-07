@@ -11,7 +11,7 @@
                         {{ form.Class(class="form-control form-control-lg")}}
                     </div>
                      <div class="form-group">
-                        {{ form.Demand.label(class="form-control-label") }}
+                        {{ form.Demand.label(class="form-control-label") }} Per Year
 
                     
                         {{ form.Demand(class="form-control form-control-lg")}}
@@ -32,9 +32,9 @@
             <div class="form-group">
                 {{ form.Submit(class="btn btn-outline-info") }}
             </div>
-            <div class="form-group">
-                
-                {{ lot }}
+            <br>
+            <div class="form-group" font-family="Times New">
+              The appropiate lot size for the situation should be: &nbsp;{{ lot }} units
             </div>
     </div>
 
